@@ -1,7 +1,6 @@
 import json
 import requests
 from geopy import distance
-from pprint import pprint
 import folium
 import os
 from dotenv import load_dotenv
@@ -35,14 +34,13 @@ def get_cafes_distance(cafe):
 def main():
     load_dotenv()
     apikey = os.getenv('APIKEY')
-    with open("coffee.json", "r") as my_file:
+    with open("coffee.json", "r", encoding="utf-8") as my_file:
         coffee_raw_content = my_file.read()
     coffee_content = json.loads(coffee_raw_content)
 
     address = input("Где вы находитесь? ")
     user_coords = fetch_coordinates(apikey, address)
-    print("Ваши координаты:", user_coords)
-
+    
     cafes_with_distance = []
     for cafe in coffee_content:
         name = cafe.get('Name')
@@ -63,8 +61,7 @@ def main():
         })
 
     nearest_cafes = sorted(cafes_with_distance, key=get_cafes_distance)[:5]
-    pprint(nearest_cafes)
-
+    
     m = folium.Map(location=[user_coords[0], user_coords[1]], zoom_start=14)
 
     folium.Marker(
