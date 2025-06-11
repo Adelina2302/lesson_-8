@@ -34,7 +34,7 @@ def get_cafes_distance(cafe):
 def main():
     load_dotenv()
     apikey = os.getenv('APIKEY')
-    with open("coffee.json", "r", encoding="utf-8") as my_file:
+    with open("coffee.json", "r", encoding="windows-1251") as my_file:
         coffee_raw_content = my_file.read()
     coffee_content = json.loads(coffee_raw_content)
 
